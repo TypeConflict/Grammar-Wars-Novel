@@ -1,0 +1,332 @@
+<!DOCTYPE HTML>
+<html lang="zh" class="rust sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>第三章 - 《語法戰爭》</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "ayu" : "rust";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('rust')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">《語法戰爭》</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="語法戰爭第三章-語法狂人的堡壘"><a class="header" href="#語法戰爭第三章-語法狂人的堡壘"><strong>《語法戰爭：第三章 語法狂人的堡壘》</strong></a></h1>
+<p>「停下！」</p>
+<p>一道低沉而嚴肅的聲音響起，張三一抬頭，發現自己站在一個巨大的圓形大廳內，四周的牆上鑲滿了語法規則與修辭學條例，還有一堆用來懲戒錯誤句子的紅色批改筆漂浮在空中，像是在監視著進入這裡的每個人。</p>
+<p>最讓人不安的，是大廳中央站著三個人——或者說，三個語法狂人。</p>
+<p>🔹 第一位是個 穿著西裝、手持紅筆的老人，眉頭深鎖，盯著張三彷彿要把他拆解成語法結構：「標點應當恰當使用，否則將導致語意混亂。請自我介紹時使用正確的句子結構。」</p>
+<p>🔹 第二位是個 穿著和服、披著字典披風的女子，雙手抱胸，語氣冰冷：「語法警察，你確定這個人沒有語法錯誤嗎？ 他的站姿看起來就像一個逗號過度使用的句子。」</p>
+<p>🔹 第三位是一個 頭髮炸開、雙眼閃爍著興奮光芒的男子，穿著印滿「詞性分析」的 T-shirt，興奮地跳了過來：「新人？！太棒了！來來來，你覺得‘的地得’的問題應該怎麼解決？！快回答！」</p>
+<p>張三嘴巴張了張，發現自己連說話的勇氣都沒有了。</p>
+<p>語法警察 拍了拍張三的肩膀，語帶笑意地說：「歡迎來到語法堡壘，張三。這裡，沒有錯別字能夠存活。」</p>
+<p>張三的冷汗 刷 地流了下來。</p>
+<p>「窩、窩4張三……」他緊張到舌頭打結了，竟然一下子從舌尖溜出了一串不該說的話。完蛋了。他想。</p>
+<p><strong>轟！</strong></p>
+<p>語法堡壘的大廳瞬間閃爍起紅色警報燈，空中的紅筆像是感應到「嚴重語法違規」的入侵者，<strong>全部對準張三，劍拔弩張！</strong></p>
+<p><strong>「發音錯誤、拼音異常、語法混亂！」</strong> 穿西裝的老人怒瞪著他，手裡的紅筆發出刺眼的光，<strong>「這已經不是單純的語法問題了——這是語言污染！」</strong></p>
+<p>「啊、啊不是，我只是太緊張了……」張三 試圖解釋，但話還沒說完，披著字典披風的女子已經冷冷地揮手：<strong>「立刻進行語法懲戒！」</strong></p>
+<p>張三 驚恐地後退，但四周的語法狂人已經圍了上來，嘴裡開始念誦一種奇怪的咒語：</p>
+<p><strong>「標準語法至上，錯誤發音當懲。」</strong>
+<strong>「規範語言神聖，亂碼句子不赦。」</strong></p>
+<p>紅筆在空中盤旋，形成一個巨大的「語法監獄」，準備將張三鎖進去！</p>
+<p>「等一下！」語法警察終於開口，他拍了拍張三的肩膀，露出一個意味深長的微笑：<strong>「這正是我帶他來的原因。」</strong></p>
+<p>「？」張三 完全沒跟上進度。</p>
+<p>語法警察緩緩推了推眼鏡：<strong>「這傢伙，正是語法堡壘缺少的存在。」</strong></p>
+<p>披著字典披風的女子皺眉：「……你是說？」</p>
+<p>語法警察緩緩地說：「語言異端的強大，來自於人們對語法規則的無視——但要徹底了解敵人，我們需要……<strong>一個真正的錯誤製造機！</strong>」</p>
+<p>語法狂人們一片譁然，紅筆顫抖著，像是不敢相信自己聽到的話。</p>
+<p>「張三，」語法警察轉向張三，嘴角微微上揚，<strong>「你，將成為我們的秘密武器——語言異端之內的內鬼。」</strong></p>
+<p>張三：「？？？？？」</p>
+<p>他真的要哭了。</p>
+<p>「你說了帶我來這裡以後就會把我放走的！」</p>
+<p>「我說過這種話嗎？」語法警察又露出那個公務員假笑，「你是不是語意理解有誤？還是你的句子結構出了問題？」</p>
+<p>張三 憤怒地翻找自己的記憶，但他發現——語法警察的確沒有明確說過「帶你來這裡以後就讓你走」，他只是說要帶他來見語言戰士，讓他看看有沒有更適合的人選。</p>
+<p>「這、這不就是<strong>話術詐欺</strong>嗎！！」張三崩潰大喊。</p>
+<p>「錯。」穿西裝的老人 <strong>冷冷打斷他</strong>，「這叫做<strong>模糊語意陷阱</strong>，是語言異端最常使用的手法之一。作為語法戰士，你居然輕易上當，看來你的訓練刻不容緩。」</p>
+<p>「我才不是語法戰士！」張三幾乎要跪下來，「放過我吧，求你們！」</p>
+<p>披著字典披風的女子撥了撥長髮，冷冷地說：「但你已經進入了語法堡壘，這裡的語言規則不允許退出。既然語法警察推薦了你，那麼——」</p>
+<p>她舉起手，一本極厚的字典 啪！ 地一聲砸在桌上，激起一陣灰塵。</p>
+<p>「<strong>——你必須通過語法測試，證明你到底是敵是友。</strong>」</p>
+<p>「測、測試？」張三顫抖著問。</p>
+<p>語法警察微微一笑：「<strong>沒錯，語法堡壘的入門考試——</strong>」</p>
+<p>「<strong>『的、地、得』正確使用大考驗！</strong>」</p>
+<p>張三：「？？？？？？？」</p>
+<p>四周的語法狂人立刻嗨了起來，穿著「詞性分析」T-shirt 的男子興奮地跳過來，遞給張三一張測驗紙：「來吧！這是<strong>我們最簡單的基礎考試</strong>，如果你連這個都過不了，那你根本沒資格踏入這個領域！」</p>
+<p>張三顫抖地接過考卷，低頭一看——</p>
+<p>【請在以下句子中填入正確的「的、地、得」】
+1️⃣ 他跑___飛快，完全不給對手任何機會。
+2️⃣ 這是世界上最難___考題，沒有人能答對。
+3️⃣ 語法狂人___眼神裡閃爍著詭異的光芒。</p>
+<p>他 <strong>當場石化</strong>。</p>
+<p><strong>完蛋了，這三個我根本不會啊！！！</strong></p>
+<p>「時間限制五分鐘，計時開始。」披著字典披風的女子 <strong>冷冷地按下碼表</strong>。</p>
+<p>張三 <strong>開始瘋狂冒汗——這題目根本比語言異端還恐怖啊！！</strong></p>
+<p>但是留下來本來就不是他的目的，於是他握緊詞性分析男順手遞過來的鉛筆，飛速地在紙張上胡亂填入答案。</p>
+<hr />
+<p>語法警察與語法狂人們 目瞪口呆 地看著張三 <strong>毫無邏輯地狂填答案——</strong></p>
+<p>他沒有猶豫，沒有思考，甚至沒有停頓，就像是一場語法領域的純粹暴力美學。</p>
+<p>📝 <strong>張三的答案：</strong>
+1️⃣ <strong>他跑得飛快，完全不給對手任何機會。（哦？好像對了？）</strong>
+2️⃣ <strong>這是世界上最難地考題，沒有人能答對。（？？？）</strong>
+3️⃣ <strong>語法狂人地眼神裡閃爍著詭異的光芒。（？？？？？？）</strong></p>
+<p>然後——</p>
+<p><strong>他毫不遲疑地把鉛筆往地上一摔，猛地轉身衝向出口！</strong></p>
+<p>「喂！等等——！」語法警察剛想追上去，披著字典披風的女子 冷冷地舉起手，示意所有人 <strong>不要動</strong>。</p>
+<p>她低頭看著張三的試卷，眉頭越皺越深，然後緩緩地吐出一口氣：「……這傢伙的語法錯誤程度，超出了我們的認知。」</p>
+<p>「<strong>這不是普通的錯誤，這是一場語法界的大地震。</strong>」穿西裝的老人 <strong>額頭冒冷汗</strong>，「如果我們現在強行修正他的語法，他的句法結構可能會當場瓦解……」</p>
+<p>穿「詞性分析」T-shirt 的男子 震驚地捂住嘴：「難道，這就是——傳說中的 <strong>「句法混沌體」</strong>？！！」</p>
+<p>語法警察：「？？？？？？？」</p>
+<p>張三 完全沒意識到身後這群人已經被他的語法錯誤震懾住了，此刻他只想 <strong>逃離這個鬼地方</strong>，但——</p>
+<p>💥 <strong>語法堡壘的大門突然關閉，門上浮現出一串巨大的紅色文字——</strong></p>
+<p><strong>【逃避是不被允許的，請接受語法懲戒。】</strong></p>
+<p>「完蛋了！！！！」張三 瘋狂拍門，結果——</p>
+<p>整扇大門忽然裂開，一隻詭異的手從門縫伸出來，緩緩地把張三抓住——</p>
+<p>門上浮現出一排極為扭曲的錯別字，它們排列成詭異的咒語，開始瘋狂扭動……</p>
+<p>語法警察的臉色 驟變：「糟了！是語法異端的詛咒入侵！」</p>
+<p>披著字典披風的女子冷冷地說：「看來……這個新人，是被‘XDD 之王’盯上了。」</p>
+<p>張三 <strong>驚恐地回頭：「你、你說什麼？！！」</strong></p>
+<p>「XDDDDDD」</p>
+<p>但張三說完那句話，竟然馬上笑了起來「XDD之王這個名字聽起來也太XDDDDD」</p>
+<p>「……糟了。」</p>
+<p>語法警察的臉色瞬間比剛剛的語法堡壘大門還要灰，他緊緊盯著張三，語氣前所未有的嚴肅：<strong>「張三，你快停下來，不要再笑了。」</strong></p>
+<p>然而，已經遲了。</p>
+<p><strong>「XDDDDDDDDDDDDDDDDDDDD」</strong></p>
+<p>張三 <strong>停不下來了</strong>。他本來只是單純覺得這個名字太荒謬，結果一個 **「XDD」**說出口後，這股笑意就像脫韁的野馬般 失控蔓延，整個人的肩膀狂顫，嘴巴不受控制地往上揚，甚至眼角開始擠出眼淚。</p>
+<p><strong>「XDDDDDDDDDDDDDDDDDDDD！！！！」</strong></p>
+<p>「張三！！！冷靜點！！！」語法警察 <strong>一巴掌拍在他背上</strong>，但一切都已經來不及了——</p>
+<p>語法堡壘的空氣突然 <strong>發生了異變</strong>。</p>
+<p>一道詭異的氣流從四面八方湧入，所有牆上的語法規則都開始<strong>扭曲、崩壞</strong>，紅筆不斷顫抖，試圖修正這種異常現象，然而 <strong>每當它們靠近張三，筆身就會開始變形、塗滿一堆「XDD」！</strong></p>
+<p>「……完了。」披著字典披風的女子臉色鐵青，「<strong>他被XDD之王的詛咒影響了。</strong>」</p>
+<p>穿西裝的老人雙手顫抖地翻開一本極厚的語法經典，然後 倒抽一口涼氣：「<strong>這……這是最高級別的語言侵蝕……他現在的笑聲已經進入了不可逆的語法錯亂狀態。</strong>」</p>
+<p>「XDDDDDDDDDDDD！！！！！」</p>
+<p>張三的眼淚狂飆，根本停不下來，他甚至開始 倒在地上狂笑翻滾，手環上的顯示螢幕則 滿屏幕都是**「XDD」**，甚至出現了某種未知的倒數計時——</p>
+<p>🔺 <strong>【語言污染程度：95%】</strong>
+🔺 <strong>【受害者即將完全轉化為XDD感染體】</strong>
+🔺 <strong>【倒數計時：30秒】</strong></p>
+<p>「快！我們還能救他嗎？！」語法警察大喊。</p>
+<p>披著字典披風的女子死死咬牙：<strong>「我們只能……用反向縮寫術，試圖讓他的語法恢復！」</strong></p>
+<p>「反向縮寫術？」張三還沒來得及反應，整個人就被語法警察一手按住額頭，他冷冷地說：「這是語法堡壘最禁忌的語言法術，只有極端情況才會使用。」</p>
+<p>語法狂人們圍成一個奇怪的陣法，口中念誦著一段充滿威嚴的語法咒語——</p>
+<p><strong>「XDD——解構為——笑死——轉換為——極度歡樂之情緒——修正為——合理語法格式！</strong>」</p>
+<p>🔺 <strong>【語法反向修正進行中……】</strong></p>
+<p>然而，就在這時，張三的笑聲 突然停了。</p>
+<p>空氣陷入了詭異的寂靜。</p>
+<p>下一秒，語法堡壘的大門轟然炸裂，一股恐怖的語言能量洶湧而入，無數由「XDD」組成的笑聲在空氣中回盪，然後——</p>
+<p>一個<strong>巨大的、戴著墨鏡、身披鍵盤披風的男人踏進了大廳。</strong></p>
+<p>他咧嘴一笑，露出無限詭異的弧度，雙手一攤，語氣懶洋洋地說：</p>
+<p><strong>「各位語法戰士，嗨呀，這麼嚴肅幹嘛？」</strong></p>
+<p><strong>「我啊——就是你們口中的『XDD 之王』，今天來這裡……」</strong></p>
+<p><strong>「就是想問一句——『有必要這麼認真嗎？XDD』」</strong></p>
+<p>大廳內，語法狂人們的臉色瞬間煞白，語法警察的眼鏡閃爍出危險的光芒，披著字典披風的女子不由自主地後退一步——</p>
+<p>「……完了，真正的語言終結者來了。」</p>
+<hr />
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="chapter_2.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="chapter_4.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="chapter_2.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="chapter_4.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>

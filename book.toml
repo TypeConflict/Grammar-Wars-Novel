@@ -1,0 +1,10 @@
+[book]
+authors = ["TypeConflict"]
+language = "zh"
+multilingual = false
+src = "src"
+title = "《語法戰爭》"
+
+[output.html]
+default-theme = "rust"
+preferred-dark-theme = "ayu"
