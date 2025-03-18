@@ -1,0 +1,248 @@
+<!DOCTYPE HTML>
+<html lang="zh" class="rust sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>第四章 - 《語法戰爭》</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "ayu" : "rust";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('rust')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">《語法戰爭》</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="語法戰爭第四章-xdd-之王的真正力量"><a class="header" href="#語法戰爭第四章-xdd-之王的真正力量"><strong>《語法戰爭：第四章 XDD 之王的真正力量》</strong></a></h1>
+<p><strong>語法警察緊緊盯著 XDD 之王，語氣前所未有的凝重：「……你到底想做什麼？」</strong></p>
+<p>XDD 之王灑脫地推了推墨鏡，咧嘴一笑：「做什麼？沒什麼啊，只是想看看——<strong>你們這些語法狂人，還能撐多久？XDD</strong>」</p>
+<p>「我來應戰！」眼看張三還倒在地上抽搐，詞性分析男勇猛地衝向了前方：「來吧！XDD之王。我們來一較高下！」</p>
+<p>XDD 之王聞言，緩緩地摘下墨鏡，露出一雙滿是戲謔與混亂的眼睛。他揚起嘴角，歪著頭看著詞性分析男，語氣帶著一絲嘲諷：<strong>「喲？竟然敢挑戰我？」</strong></p>
+<p>詞性分析男目光銳利，手上已經捏緊了一支特製的語法紅筆，語氣堅定：<strong>「語言不是兒戲！詞性、句法、修辭，每個元素都有其精確的意義！你那些毫無規則、沒有邏輯的語言，只會讓世界陷入混亂！」</strong></p>
+<p>「XDDDDDDDDDD。」XDD 之王輕笑了一聲，然後雙手一攤，無數個「XDD」文字突然從他的身體裡洶湧而出，在空氣中形成了一道巨大的 <strong>「XDD 文字浪潮」</strong>！</p>
+<p>「XDD 之力——<strong>語言娛樂化浪潮！</strong>」</p>
+<p>轟！ 這股由「XDD」組成的衝擊波猛烈地朝詞性分析男席捲而去，所到之處，語法規則紛紛扭曲，標點符號開始脫離它們原本應有的位置，就連語法堡壘牆上的語言法則也變得<strong>戲謔、無厘頭，甚至開始自我調侃——</strong></p>
+<p><strong>「語法是用來開心的，誰還在乎什麼標準？」</strong>
+<strong>「錯字也很可愛啊XDDDDDDDD」</strong>
+<strong>「句子能讀懂就好了，為什麼要糾結這麼多？？？」</strong></p>
+<p>詞性分析男 <strong>狠狠咬牙，揮舞著手中的紅筆，試圖劃破這道浪潮！</strong></p>
+<p>「詞性分析之陣——『主語謂語賓語結界』！」</p>
+<p>一股龐大的語言分析力量在空中形成了一個 超完整的句法樹，主語、謂語、賓語排列得井然有序，試圖用絕對的語法邏輯來對抗這場混亂！</p>
+<p>「XDDDDD！」XDD 之王輕笑，他只是<strong>輕輕地抬起手指，朝著句法樹輕輕一點——</strong></p>
+<p>「欸嘿，你這個句法結構啊，太過時了。」</p>
+<p>啪！</p>
+<p>整棵句法樹瞬間坍塌！</p>
+<p>詞性分析男 噴出一口血，整個人被震飛出去，狠狠地撞上語法堡壘的牆壁！</p>
+<p>「怎、怎麼可能——」他半跪在地上，嘴角滲出鮮血，紅筆也斷裂了一半，「我的語法……居然會被瞬間破解？！」</p>
+<p>XDD之王輕蔑地笑了：<strong>「你的問題很簡單啊。你還活在過去，你的語法太正統了，根本沒跟上網路時代的變化XDDDD」</strong></p>
+<p>詞性分析男的瞳孔劇烈顫抖：「……什、什麼？」</p>
+<p>XDD之王聳了聳肩，雙手插進口袋：<strong>「語言是流動的，網路用語的誕生，才是真正屬於這個時代的語法進化。你們語法狂人守著老掉牙的標準語法，以為自己能維持秩序？」</strong></p>
+<p>他微微一笑：「抱歉，現在的世界，已經不需要這些東西了XDDDDDD」</p>
+<p>語法狂人們的表情瞬間變得前所未有的嚴峻，語法警察推了推眼鏡，眼底閃過一絲冷意：「這傢伙……比我們想像的還要可怕……」</p>
+<p>而就在這時——</p>
+<p>倒在地上的 張三 突然劇烈地顫抖起來，他的笑聲越來越誇張：「XDDDDDDDDDDDDDDDDDDDDDDDDDDD！！！！！」</p>
+<p>🔺 <strong>【語言污染程度：99%】</strong>
+🔺 <strong>【受害者即將完全轉化為XDD感染體】</strong>
+🔺 <strong>【倒數計時：5秒】</strong></p>
+<p>語法警察瞳孔驟縮：「糟了，他的語法結構要崩壞了！！！」</p>
+<p>但還沒等任何人行動，張三突然猛地坐起，雙眼布滿了瘋狂的笑意，他的嘴角彷彿已經無法控制地往上揚，他舉起雙手，聲音異常興奮地喊道——</p>
+<p><strong>「XDD 之王！帶我一起進入語言新時代吧！！！！XDDDDDDDDD」</strong></p>
+<p>千鈞一髮之際，穿西裝的老人顫顫巍巍地站起來，「等一下。」</p>
+<p>才剛用盡全力修復張三的語言污染，他現在看起來格外虛弱，但聲音卻很有力。</p>
+<p>「張三，你想一想。他也許根本就不是你真正想追隨的XDD之王。」</p>
+<p>他銳利的目光掃過XDD之王吐出口的句子。「你仔細看看吧，你們兩個的語言之間有什麼差異存在！」</p>
+<p><strong>張三的笑聲猛然一頓。</strong></p>
+<p>他的理智雖然已經快被「XDD」的語言侵蝕吞沒，但穿西裝老人的話，卻像是一道驚雷，劃破了他混亂的思緒。</p>
+<p>「……什麼意思？」 張三瞪著發顫的雙眼，額頭還在冒汗，語氣卻不由自主地變得猶豫起來。</p>
+<p>穿西裝的老人深深吸了一口氣，強忍著語法污染對他的影響，手顫抖地指向 XDD 之王：<strong>「你自己看看吧，張三……他說的每一句話，和你的『XDD』，真的一模一樣嗎？」</strong></p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="chapter_3.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="chapter_5.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="chapter_3.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="chapter_5.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>
